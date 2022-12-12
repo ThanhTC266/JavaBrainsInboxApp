@@ -1,0 +1,31 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: Iv1.14f1bb722e101b45
+            client-secret: 10b98fef909151898f364bd1475b08d081d0e709
+
+  data:
+    cassandra:
+      keyspace-name: main
+      username: CkMpXiKJmfkpohaENRPyiqBw
+      password: 8BXh9dt56kfdhsPiAjAGW_08iKLhdMKHNRfWBp9zQDs9,mAKIDKbUZtqBOJH,oUL46HIZb8vIod1MCqqISm.qd4J-Rui3+i1JSbXpI9_eavBDHPaD2+MDk5WsleNuSF7
+      schema-action: recreate_drop_unused
+      request:
+        timeout: 10s
+      connection:
+        connect-timeout: 10s
+        init-query-timeout: 10s
+
+astra.db:
+    id: 95567e21-fc0c-43f6-aef1-74dffd79bba7-1
+    region: asia-south1
+    keyspace: main
+    application.token: AstraCS:BIsLTZKqoJQNKZTaFaaUCyaA:b51ee9340bd40b88b914240a3c99d9c62afaf95f955057224b9e22e030e70b8a
+
+datastax.astra:
+  secure-connect-bundle: secure-connect.zip
+
+namespace-uri: http://www.thymeleaf.org

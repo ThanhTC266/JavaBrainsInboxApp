@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "datastax.astra",
+      "type": "io.javabrains.DataStaxAstraProperties",
+      "sourceType": "io.javabrains.DataStaxAstraProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "datastax.astra.secure-connect-bundle",
+      "type": "java.io.File",
+      "sourceType": "io.javabrains.DataStaxAstraProperties"
+    }
+  ],
+  "hints": []
+}
