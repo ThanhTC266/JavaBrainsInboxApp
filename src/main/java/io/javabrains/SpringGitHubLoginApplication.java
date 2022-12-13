@@ -1,6 +1,8 @@
 package io.javabrains;
 
 import com.datastax.oss.driver.api.core.uuid.Uuids;
+import io.javabrains.email.Email;
+import io.javabrains.email.EmailRepository;
 import io.javabrains.emaillist.EmailListItem;
 import io.javabrains.emaillist.EmailListItemKey;
 import io.javabrains.emaillist.EmailListItemRepository;
@@ -32,6 +34,8 @@ public class SpringGitHubLoginApplication {
 	private FolderRepository folderRepository;
 	@Autowired
 	private EmailListItemRepository emailListItemRepository;
+	@Autowired
+	private EmailRepository emailRepository;
 	/**
 	 *
 	 * This is necessary to have the Spring Boot app use the Astra secure bundle
@@ -64,11 +68,20 @@ public class SpringGitHubLoginApplication {
 
 			EmailListItem item = new EmailListItem();
 			item.setKey(key);
-			item.setTo(Arrays.asList("ThanhTC266"));
+			item.setTo(Arrays.asList("ThanhTC266", "abc", "def"));
 			item.setSubject("Subject "+ i);
 			item.setUnread(true);
 
 			emailListItemRepository.save(item);
+
+			Email email= new Email();
+			email.setId(key.getTimeUUID());
+			email.setFrom("ThanhTC266");
+			email.setSubject(item.getSubject());
+			email.setBody("Body "+ i);
+			email.setTo(item.getTo());
+
+			emailRepository.save(email);
 		}
 	}
 }
