@@ -1,5 +1,6 @@
 package io.javabrains.controllers;
 
+import com.datastax.oss.driver.api.core.uuid.Uuids;
 import io.javabrains.emaillist.EmailListItem;
 import io.javabrains.emaillist.EmailListItemRepository;
 import io.javabrains.folders.Folder;
@@ -12,8 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 
 @Controller
@@ -25,8 +29,10 @@ public class InboxController {
     @Autowired
     private FolderService folderService;
     @GetMapping(value = "/")
-    public String homePage(@AuthenticationPrincipal OAuth2User principal
-    , Model model) {
+    public String homePage(
+            @RequestParam(required = false) String folder,
+            @AuthenticationPrincipal OAuth2User principal,
+            Model model) {
 
         if ((principal == null) || !StringUtils.hasText(principal.getAttribute("login"))){
             return "index";
@@ -39,9 +45,18 @@ public class InboxController {
         model.addAttribute("defaultFolders", defaultFolders);
 
         // fetch messages
-        String folderlabel = "Inbox";
-        List<EmailListItem> emailList = emailListItemRepository.findAllByKey_IdAndKey_Label(userId,folderlabel);
+        if(!StringUtils.hasText(folder)) {
+            folder = "Inbox";
+        }
+        List<EmailListItem> emailList = emailListItemRepository.findAllByKey_IdAndKey_Label(userId,folder);
+        emailList.stream().forEach(emailItem -> {
+            UUID timeUuid = emailItem.getKey().getTimeUUID();
+            Date emailDateTime = new Date(Uuids.unixTimestamp(timeUuid));
+//            emailItem.setUnread();
+        } );
         model.addAttribute("emailList", emailList);
+        model.addAttribute("folderName", folder);
+
         return "inbox-page";
     }
 }
