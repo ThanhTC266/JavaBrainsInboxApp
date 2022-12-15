@@ -8,6 +8,7 @@ import io.javabrains.emaillist.EmailListItemKey;
 import io.javabrains.emaillist.EmailListItemRepository;
 import io.javabrains.folders.FolderRepository;
 import io.javabrains.folders.Folder;
+import io.javabrains.folders.UnreadEmailStatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -36,6 +37,8 @@ public class SpringGitHubLoginApplication {
 	private EmailListItemRepository emailListItemRepository;
 	@Autowired
 	private EmailRepository emailRepository;
+	@Autowired
+	private UnreadEmailStatsRepository unreadEmailStatsRepository;
 	/**
 	 *
 	 * This is necessary to have the Spring Boot app use the Astra secure bundle
@@ -60,6 +63,9 @@ public class SpringGitHubLoginApplication {
 		folderRepository.save(new Folder("ThanhTC266","Sent", "green"));
 		folderRepository.save(new Folder("ThanhTC266","Important", "yellow"));
 
+		unreadEmailStatsRepository.incrementUnreadCount("ThanhTC266","Inbox");
+		unreadEmailStatsRepository.incrementUnreadCount("ThanhTC266","Inbox");
+		unreadEmailStatsRepository.incrementUnreadCount("ThanhTC266","Inbox");
 		for(int i=0; i< 10; i++){
 			EmailListItemKey key = new EmailListItemKey();
 			key.setId("ThanhTC266");
